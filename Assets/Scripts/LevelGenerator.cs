@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    public GameObject[] tiles;
-    public Transform firstTile;
-    public int visibleTileAmount;
+    [SerializeField] Camera playerCamera;
+    [SerializeField] GameObject[] tiles;
+    [SerializeField] Transform firstTile;
+    [SerializeField] int visibleTileAmount;
     GameObject currentTile;
     int tileCounter;
     List<Transform> visibleTiles;
@@ -24,7 +25,17 @@ public class LevelGenerator : MonoBehaviour
     void Update()
     {
         // just for testing
-        if(Input.GetKeyDown(KeyCode.Space))
+        // if(Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     AddNextTile();
+        // }
+
+        // Add a new tile to the right when right side of first tile in the visibleTiles list exits screen
+        // TODO: Optimize this
+        Vector3 firstVisiblePos = playerCamera.WorldToViewportPoint(visibleTiles[0].Find("exit").position);
+        bool isFirstVisibleOnScreen = firstVisiblePos.x > 0 && firstVisiblePos.x < 1;
+        Debug.Log(isFirstVisibleOnScreen);
+        if (!isFirstVisibleOnScreen)
         {
             AddNextTile();
         }
@@ -44,7 +55,7 @@ public class LevelGenerator : MonoBehaviour
         GameObject nextTile = Instantiate(tiles[nextTileIndex]);
         visibleTiles.Add(nextTile.transform);
 
-        Transform exitPoint = currentTile.transform.Find("ExitPoint");
+        Transform exitPoint = currentTile.transform.Find("exit");
         nextTile.transform.position = new Vector2(exitPoint.position.x, exitPoint.position.y);
         
         if (tileCounter < visibleTileAmount)
