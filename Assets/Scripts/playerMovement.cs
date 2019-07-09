@@ -1,12 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerMovement : MonoBehaviour
 {
     Rigidbody2D body;
     [SerializeField] float maxSpeed = 0;
     [SerializeField] float groundDistance;
+    [SerializeField] Animator animator;
+    [SerializeField] float stunDuration;
+    float stunCountdown;
+    bool dead;
+
+
+
     bool CanJump()
     {
         int layermask = 1 << 8;
@@ -40,31 +48,42 @@ public class playerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+      
         if (body.velocity.magnitude > maxSpeed)
         {
             body.velocity = Vector2.ClampMagnitude(body.velocity, maxSpeed);
         }
-        
-        
-        if (Input.GetKeyDown(KeyCode.W))
+
+        stunCountdown -= Time.deltaTime;
+        if (stunCountdown <= 0)
         {
-            if (CanJump())
+            if (Input.GetKeyDown(KeyCode.W))
             {
-                body.AddForce(new Vector2(0, 2000));
-                body.AddTorque(45f);
+                if (CanJump())
+                {
+                    body.AddForce(new Vector2(0, 2000));
+                    body.AddTorque(45f);
+                    animator.SetTrigger("Jump");
+                    animator.SetBool("Squat", false);
+                }
+            }
+
+            if (Input.GetKey(KeyCode.S))
+            {
+                if (CanJump())
+                {
+                    body.AddForce(new Vector2(1, 0) * Time.deltaTime * 2000f);
+                    animator.SetBool("Squat", true);
+                }
+                else
+                {
+                    body.AddForce(new Vector2(0, -1) * Time.deltaTime * 2000f);
+                }
             }
         }
-
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKeyUp(KeyCode.S))
         {
-            if (CanJump())
-            {
-                body.AddForce(new Vector2 (1,0) * Time.deltaTime*2000f);
-            }
-            else
-            {
-                body.AddForce(new Vector2(0, -1) * Time.deltaTime*2000f);
-            }
+            animator.SetBool("Squat", false);
         }
     }
 
@@ -72,7 +91,17 @@ public class playerMovement : MonoBehaviour
     {
         if (collision.tag == "Obstacle")
         {
-            body.velocity = body.velocity / 2;
+            body.velocity = body.velocity / 4;
+            animator.SetTrigger("Stun");
+            animator.SetBool("Squat", false);
+            stunCountdown = stunDuration;
+        }
+        if (collision.tag == "Finish")
+        {
+            body.velocity = Vector2.zero;
+            stunCountdown = stunDuration;
+            dead = true;
+            SceneManager.LoadScene("Game");
         }
     }
 }
