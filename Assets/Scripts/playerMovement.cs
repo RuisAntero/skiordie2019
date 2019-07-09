@@ -15,6 +15,16 @@ public class playerMovement : MonoBehaviour
             Debug.DrawRay(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(0, -groundDistance, 0), Color.green, 1);
             return true;
         }
+        else if (Physics2D.Raycast(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(.5f, -groundDistance, 0), groundDistance, layermask))
+        {
+            Debug.DrawRay(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(.5f, -groundDistance, 0), Color.green, 1);
+            return true;
+        }
+        else if (Physics2D.Raycast(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(-.5f, -groundDistance, 0), groundDistance, layermask))
+        {
+            Debug.DrawRay(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(-.5f, -groundDistance, 0), Color.green, 1);
+            return true;
+        }
         else
         {
             return false;
@@ -34,11 +44,6 @@ public class playerMovement : MonoBehaviour
         {
             body.velocity = Vector2.ClampMagnitude(body.velocity, maxSpeed);
         }
-
-        //if (!CanJump())
-        //{
-        //    body.AddForce(new Vector2(-250f * Time.deltaTime, 0));
-        //}
         
         
         if (Input.GetKeyDown(KeyCode.W))
