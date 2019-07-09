@@ -126,6 +126,54 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1568868096}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1084162172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1084162174}
+  - component: {fileID: 1084162173}
+  m_Layer: 0
+  m_Name: LevelGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1084162173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1084162172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcdac4c4040f74c088b9d75a2ddf23e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 3714594517525259030, guid: df25fc03940ca482b9f74a48f921897d, type: 3}
+  - {fileID: 3714594517525259030, guid: c87bbb9ef397b4db2aa11a4995fac9b8, type: 3}
+  firstTile: {fileID: 247094594}
+  visibleTileAmount: 5
+--- !u!4 &1084162174
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1084162172}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.10286176, y: 0.19407514, z: -0.40437287}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1568868096
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -182,7 +230,7 @@ PrefabInstance:
     - target: {fileID: 3714594517525259031, guid: df25fc03940ca482b9f74a48f921897d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3714594517525259031, guid: df25fc03940ca482b9f74a48f921897d,
         type: 3}
@@ -278,7 +326,7 @@ Transform:
   m_LocalScale: {x: 77.94891, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1969946558
 GameObject:
@@ -382,7 +430,6 @@ GameObject:
   - component: {fileID: 1971603803}
   - component: {fileID: 1971603802}
   - component: {fileID: 1971603801}
-  - component: {fileID: 1971603804}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -455,21 +502,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1971603804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1971603800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcdac4c4040f74c088b9d75a2ddf23e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tiles:
-  - {fileID: 3714594517525259030, guid: df25fc03940ca482b9f74a48f921897d, type: 3}
-  - {fileID: 3714594517525259030, guid: c87bbb9ef397b4db2aa11a4995fac9b8, type: 3}
-  firstTile: {fileID: 247094594}
-  visibleTileAmount: 5
-  visibleTiles: []
