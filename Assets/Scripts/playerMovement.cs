@@ -15,7 +15,7 @@ public class playerMovement : MonoBehaviour
 
 
 
-    bool CanJump()
+    public bool CanJump()
     {
         int layermask = 1 << 8;
         if (Physics2D.Raycast(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(0, -groundDistance, 0), groundDistance, layermask))
