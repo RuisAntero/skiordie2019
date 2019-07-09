@@ -6,19 +6,19 @@ public class cameraFollow : MonoBehaviour
 {
     public Rigidbody2D player;
     float refSize;
-    Vector3 refPos;
 
     // Start is called before the first frame update
     void Start()
     {
-        refPos = transform.position - player.transform.position;
         refSize = Camera.main.orthographicSize;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        transform.position = player.transform.position + refPos;
-        Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, refSize + player.velocity.magnitude * 0.5f, 0.02f);
+        Vector3 endPos = Vector3.Lerp(transform.position, player.transform.position + new Vector3( 14 + Mathf.Pow(player.velocity.x*0.1f,3), -player.velocity.x*0.2f, 0), 0.1f);
+        endPos.z = -10;
+        transform.position = endPos;
+        Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, refSize + player.velocity.x * 0.8f, 0.02f);
     }
 }

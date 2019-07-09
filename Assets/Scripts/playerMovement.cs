@@ -7,7 +7,19 @@ public class playerMovement : MonoBehaviour
     Rigidbody2D body;
     [SerializeField] float maxSpeed = 0;
     [SerializeField] float groundDistance;
-    bool canJump = false;
+    bool CanJump()
+    {
+        int layermask = 1 << 8;
+        if (Physics2D.Raycast(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(0, -groundDistance, 0), groundDistance, layermask))
+        {
+            Debug.DrawRay(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(0, -groundDistance, 0), Color.green, 1);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -22,25 +34,40 @@ public class playerMovement : MonoBehaviour
         {
             body.velocity = Vector2.ClampMagnitude(body.velocity, maxSpeed);
         }
+
+        //if (!CanJump())
+        //{
+        //    body.AddForce(new Vector2(-250f * Time.deltaTime, 0));
+        //}
         
         
-        if (Input.GetKeyDown(KeyCode.W) && canJump)
+        if (Input.GetKeyDown(KeyCode.W))
         {
-            int layermask = 1 << 8;
-            if (Physics2D.Raycast(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(0, -groundDistance, 0), groundDistance, layermask))
+            if (CanJump())
             {
-                Debug.DrawRay(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(0, -groundDistance, 0), Color.green, 1);
-                body.AddForce(new Vector2(0, 1000));
+                body.AddForce(new Vector2(0, 2000));
                 body.AddTorque(45f);
-                canJump = false;
+            }
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            if (CanJump())
+            {
+                body.AddForce(new Vector2 (1,0) * Time.deltaTime*2000f);
+            }
+            else
+            {
+                body.AddForce(new Vector2(0, -1) * Time.deltaTime*2000f);
             }
         }
     }
-    void OnCollisionEnter2D(Collision2D col)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (col.gameObject.layer == 8)
+        if (collision.tag == "Obstacle")
         {
-            canJump = true;
+            body.velocity = body.velocity / 2;
         }
     }
 }
