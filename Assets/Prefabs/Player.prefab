@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 2133947814525213676}
   - component: {fileID: 2133947814525213667}
   - component: {fileID: 4187569013086102108}
-  - component: {fileID: 643631296}
   - component: {fileID: 643631297}
+  - component: {fileID: 643631296}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -248,20 +248,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &643631296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2133947814525213671}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e68df4aca433134d8a48f003908574a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skiAudio: {fileID: 4187569013086102108}
-  jumpAudio: {fileID: 643631297}
 --- !u!82 &643631297
 AudioSource:
   m_ObjectHideFlags: 0
@@ -358,6 +344,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &643631296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133947814525213671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e68df4aca433134d8a48f003908574a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skiAudio: {fileID: 4187569013086102108}
+  jumpAudio: {fileID: 643631297}
 --- !u!1 &2133947814790199294
 GameObject:
   m_ObjectHideFlags: 0

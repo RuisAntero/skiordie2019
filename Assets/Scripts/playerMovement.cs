@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class playerMovement : MonoBehaviour
 {
@@ -67,7 +66,7 @@ public class playerMovement : MonoBehaviour
             {
                 if (Grounded(true))
                 {
-                    body.AddForce(new Vector2(500, 1000));
+                    body.AddForce(new Vector2(500, 1200));
                     body.AddTorque(45f);
 
                     animator.SetTrigger("Jump");
@@ -109,7 +108,7 @@ public class playerMovement : MonoBehaviour
             body.velocity = Vector2.zero;
             stunCountdown = stunDuration;
             dead = true;
-            SceneManager.LoadScene("Game");
+            this.enabled = false;
         }
     }
 }
