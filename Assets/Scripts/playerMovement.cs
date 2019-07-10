@@ -1,23 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerMovement : MonoBehaviour
 {
     Rigidbody2D body;
     [SerializeField] float maxSpeed = 0;
     [SerializeField] float groundDistance;
-    bool CanJump()
+    [SerializeField] Animator animator;
+    [SerializeField] float stunDuration;
+    float stunCountdown;
+    bool dead;
+
+
+
+    public bool Grounded(bool jump)
     {
         int layermask = 1 << 8;
-        if (Physics2D.Raycast(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(0, -groundDistance, 0), groundDistance, layermask))
+        if (jump && Physics2D.Raycast(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(-2f, -groundDistance * 2f, 0), groundDistance, layermask))
         {
-            Debug.DrawRay(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(0, -groundDistance, 0), Color.green, 1);
+            Debug.DrawRay(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(-2f, -groundDistance * 2f, 0), Color.green, 1);
             return true;
         }
-        else if (Physics2D.Raycast(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(.5f, -groundDistance, 0), groundDistance, layermask))
+        else if (Physics2D.Raycast(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(0, -groundDistance, 0), groundDistance, layermask))
         {
-            Debug.DrawRay(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(.5f, -groundDistance, 0), Color.green, 1);
+            Debug.DrawRay(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(0, -groundDistance, 0), Color.green, 1);
             return true;
         }
         else if (Physics2D.Raycast(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(-.5f, -groundDistance, 0), groundDistance, layermask))
@@ -25,6 +33,12 @@ public class playerMovement : MonoBehaviour
             Debug.DrawRay(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(-.5f, -groundDistance, 0), Color.green, 1);
             return true;
         }
+        else if (Physics2D.Raycast(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(.5f, -groundDistance, 0), groundDistance, layermask))
+        {
+            Debug.DrawRay(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(.5f, -groundDistance, 0), Color.green, 1);
+            return true;
+        }
+        
         else
         {
             return false;
@@ -40,31 +54,44 @@ public class playerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+      
         if (body.velocity.magnitude > maxSpeed)
         {
             body.velocity = Vector2.ClampMagnitude(body.velocity, maxSpeed);
         }
-        
-        
-        if (Input.GetKeyDown(KeyCode.W))
+
+        stunCountdown -= Time.deltaTime;
+        if (stunCountdown <= 0)
         {
-            if (CanJump())
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                body.AddForce(new Vector2(0, 2000));
-                body.AddTorque(45f);
+                if (Grounded(true))
+                {
+                    body.AddForce(new Vector2(500, 1000));
+                    body.AddTorque(45f);
+
+                    animator.SetTrigger("Jump");
+                    animator.SetBool("Squat", false);
+                    GetComponent<playerAudio>().playJump();
+                }
+            }
+
+            if (Input.GetKey(KeyCode.S))
+            {
+                if (Grounded(false))
+                {
+                    body.AddForce(new Vector2(1, 0) * Time.deltaTime * 2000f);
+                    animator.SetBool("Squat", true);
+                }
+                else
+                {
+                    body.AddForce(new Vector2(0, -1) * Time.deltaTime * 2000f);
+                }
             }
         }
-
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKeyUp(KeyCode.S))
         {
-            if (CanJump())
-            {
-                body.AddForce(new Vector2 (1,0) * Time.deltaTime*2000f);
-            }
-            else
-            {
-                body.AddForce(new Vector2(0, -1) * Time.deltaTime*2000f);
-            }
+            animator.SetBool("Squat", false);
         }
     }
 
@@ -72,7 +99,17 @@ public class playerMovement : MonoBehaviour
     {
         if (collision.tag == "Obstacle")
         {
-            body.velocity = body.velocity / 2;
+            body.velocity = body.velocity / 4;
+            animator.SetTrigger("Stun");
+            animator.SetBool("Squat", false);
+            stunCountdown = stunDuration;
+        }
+        if (collision.tag == "Finish")
+        {
+            body.velocity = Vector2.zero;
+            stunCountdown = stunDuration;
+            dead = true;
+            SceneManager.LoadScene("Game");
         }
     }
 }
