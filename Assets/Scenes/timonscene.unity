@@ -986,10 +986,5 @@ PrefabInstance:
       propertyPath: firstTile
       value: 
       objectReference: {fileID: 1658015984}
-    - target: {fileID: 4205768141100737190, guid: d322c8709a48f4dc2bdeacea2fbc7020,
-        type: 3}
-      propertyPath: minTileGap
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d322c8709a48f4dc2bdeacea2fbc7020, type: 3}

@@ -14,9 +14,11 @@ public class LevelGenerator : MonoBehaviour
     Camera playerCamera;
 
     [SerializeField] GameObject[] obstacles;
-    [SerializeField] int maxObstaclesPerTile;
+    //[SerializeField] int maxObstaclesPerTile;
+    int maxObstaclesPerTile = 1; // tiles are so small that one obstacle per tile is enough
     [SerializeField] int minTileGap;
     int tileGapsPassed;
+    [SerializeField] int obstaclePropabilityPercent;
 
     void Awake()
     {
@@ -79,9 +81,13 @@ public class LevelGenerator : MonoBehaviour
 
     void PopulateWithObstacles(GameObject tile)
     {
-        int obstacleAmount = Random.Range(0, maxObstaclesPerTile + 1);
-        //Debug.Log(obstacleAmount);
-        if (tileGapsPassed >= minTileGap)
+        int obstacleAmount = Random.Range(1, maxObstaclesPerTile + 1);
+        bool insertObstacles = false;
+        if ( obstaclePropabilityPercent >= Random.Range(0, 100+1) )
+        {
+            insertObstacles = true;
+        }
+        if (insertObstacles && tileGapsPassed >= minTileGap)
         {
             for (int i = 0; i < obstacleAmount; i++)
             {
@@ -99,7 +105,7 @@ public class LevelGenerator : MonoBehaviour
     {
         //Debug.Log(tile.transform.position + " " + tile.transform.Find(EXIT_POINT_NAME).position);
         int typeIndex = Random.Range(0, obstacles.Length);
-        float fracJourney = 0.5f;
+        float fracJourney = Random.Range(0f, 1f);
         Vector3 pos = Vector3.Lerp(tile.transform.position, tile.transform.Find(EXIT_POINT_NAME).position, fracJourney);
         //Debug.Log(pos);
         GameObject obstacle = Instantiate(obstacles[typeIndex]);
