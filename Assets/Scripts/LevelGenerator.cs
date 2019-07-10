@@ -105,7 +105,7 @@ public class LevelGenerator : MonoBehaviour
     {
         //Debug.Log(tile.transform.position + " " + tile.transform.Find(EXIT_POINT_NAME).position);
         int typeIndex = Random.Range(0, obstacles.Length);
-        float fracJourney = Random.Range(0f, 1f);
+        float fracJourney = 0.5f; // Random.Range(0f, 1f);
         Vector3 pos = Vector3.Lerp(tile.transform.position, tile.transform.Find(EXIT_POINT_NAME).position, fracJourney);
         //Debug.Log(pos);
         GameObject obstacle = Instantiate(obstacles[typeIndex]);
