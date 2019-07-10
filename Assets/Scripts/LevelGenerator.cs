@@ -15,6 +15,8 @@ public class LevelGenerator : MonoBehaviour
 
     [SerializeField] GameObject[] obstacles;
     [SerializeField] int maxObstaclesPerTile;
+    [SerializeField] int minTileGap;
+    int tileGapsPassed;
 
     void Awake()
     {
@@ -79,9 +81,17 @@ public class LevelGenerator : MonoBehaviour
     {
         int obstacleAmount = Random.Range(0, maxObstaclesPerTile + 1);
         //Debug.Log(obstacleAmount);
-        for (int i = 0; i < obstacleAmount; i++)
+        if (tileGapsPassed >= minTileGap)
         {
-            AddObstacle(tile);
+            for (int i = 0; i < obstacleAmount; i++)
+            {
+                AddObstacle(tile);
+            }
+            tileGapsPassed = 0;
+        } 
+        else
+        {
+            tileGapsPassed++;
         }
     }
 
