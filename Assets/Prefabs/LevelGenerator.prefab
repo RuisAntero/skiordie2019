@@ -50,3 +50,7 @@ MonoBehaviour:
   - {fileID: 3295668815986220804, guid: 5844a7960337f4344a0b39221515f611, type: 3}
   firstTile: {fileID: 0}
   visibleTileAmount: 20
+  obstacles:
+  - {fileID: 6528141849494814544, guid: 5f899f3c955534d4eab9f27579c55268, type: 3}
+  - {fileID: 6528141849494814544, guid: 3e191f1ff711c4d65b76789ecd2a0e4c, type: 3}
+  maxObstaclesPerTile: 1
