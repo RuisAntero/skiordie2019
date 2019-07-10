@@ -22,22 +22,19 @@ public class playerAudio : MonoBehaviour
 
     private void Update()
     {
-        skiAudio.volume = Mathf.Lerp(skiAudio.volume, targetVolume, 0.3f);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
         if (player.Grounded(false))
         {
-            targetVolume = refVolume;
+            targetVolume = refVolume * player.GetComponent<Rigidbody2D>().velocity.magnitude / 28;
         }
-    }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (!player.Grounded(false))
+        else
         {
-            targetVolume = 0;
+            targetVolume = 0f;
         }
+        if (!player.enabled)
+        {
+            targetVolume = 0f;
+        }
+        skiAudio.volume = Mathf.Lerp(skiAudio.volume, targetVolume, 0.3f); 
     }
 
     public void playJump()

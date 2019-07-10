@@ -12,14 +12,19 @@ public class playerMovement : MonoBehaviour
     float stunCountdown;
     bool dead;
 
-
+    bool jumping;
 
     public bool Grounded(bool jump)
     {
         int layermask = 1 << 8;
-        if (jump && Physics2D.Raycast(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(-2f, -groundDistance * 2f, 0), groundDistance, layermask))
+        if (jump && Physics2D.Raycast(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(-3f, -groundDistance * 3f, 0), groundDistance, layermask))
         {
-            Debug.DrawRay(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(-2f, -groundDistance * 2f, 0), Color.green, 1);
+            Debug.DrawRay(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(-3f, -groundDistance * 3f, 0), Color.green, 1);
+            return true;
+        }
+        else if (jump && Physics2D.Raycast(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(0, -groundDistance * 3f, 0), groundDistance, layermask))
+        {
+            Debug.DrawRay(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(-3f, -groundDistance * 3f, 0), Color.green, 1);
             return true;
         }
         else if (Physics2D.Raycast(transform.position, Quaternion.Euler(transform.rotation.eulerAngles) * new Vector3(0, -groundDistance, 0), groundDistance, layermask))
@@ -54,7 +59,7 @@ public class playerMovement : MonoBehaviour
     void Update()
     {
 
-        Vector3 vectorToTarget = body.velocity.normalized;
+        Vector3 vectorToTarget = new Vector3(body.velocity.x, Mathf.Clamp(body.velocity.y, -1f, 100), 0).normalized;
         float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
         Quaternion q = Quaternion.AngleAxis(angle, transform.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, q, 0.1f);
@@ -77,12 +82,13 @@ public class playerMovement : MonoBehaviour
                 if (Grounded(true))
                 {
                     body.velocity = new Vector2(body.velocity.x / 3, 0);
-                    body.AddForce(new Vector2(500, 800));
+                    body.AddForce(new Vector2(350, 800));
                     body.AddTorque(45f);
 
                     animator.SetTrigger("Jump");
                     animator.SetBool("Squat", false);
                     GetComponent<playerAudio>().playJump();
+                    jumping = true;
                 }
             }
 
@@ -90,7 +96,7 @@ public class playerMovement : MonoBehaviour
             {
                 if (Grounded(false))
                 {
-                    body.AddForce(new Vector2(1, 0) * Time.deltaTime * 2000f);
+                    body.AddForce(new Vector2(1, 0) * Time.deltaTime * 1000f);
                     animator.SetBool("Squat", true);
                 }
                 else
@@ -102,6 +108,20 @@ public class playerMovement : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.S))
         {
             animator.SetBool("Squat", false);
+        }
+
+        animator.SetBool("Jumping", jumping);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 8)
+        {
+            jumping = false;
+            if (Mathf.Abs(collision.relativeVelocity.y) > 10f)
+            {
+                animator.SetTrigger("Land");
+            }
         }
     }
 
@@ -121,6 +141,7 @@ public class playerMovement : MonoBehaviour
             body.velocity = Vector2.zero;
             stunCountdown = stunDuration;
             dead = true;
+            body.simulated = false;
             this.enabled = false;
         }
     }
