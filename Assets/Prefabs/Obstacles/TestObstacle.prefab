@@ -96,7 +96,7 @@ BoxCollider2D:
   m_Offset: {x: 0.27851057, y: 1.6234403}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.004373092}
+    pivot: {x: 0.5, y: 0.057823047}
     oldSize: {x: 3, y: 3.8}
     newSize: {x: 3, y: 3.8}
     adaptiveTilingThreshold: 0.5
@@ -116,8 +116,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6528141849494814547}
   m_Layer: 0
-  m_Name: Spruce2
-  m_TagString: Untagged
+  m_Name: TestObstacle
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
