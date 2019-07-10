@@ -53,8 +53,18 @@ public class playerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      
-        if (body.velocity.magnitude > maxSpeed)
+
+        Vector3 vectorToTarget = body.velocity.normalized;
+        float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
+        Quaternion q = Quaternion.AngleAxis(angle, transform.forward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, q, 0.1f);
+
+        if (Mathf.Abs(transform.rotation.z) > 90)
+        {
+            transform.eulerAngles = Vector3.zero;
+        }
+
+        if (body.velocity.x > maxSpeed)
         {
             body.velocity = Vector2.ClampMagnitude(body.velocity, maxSpeed);
         }
@@ -66,7 +76,8 @@ public class playerMovement : MonoBehaviour
             {
                 if (Grounded(true))
                 {
-                    body.AddForce(new Vector2(500, 1200));
+                    body.velocity = new Vector2(body.velocity.x / 3, 0);
+                    body.AddForce(new Vector2(500, 800));
                     body.AddTorque(45f);
 
                     animator.SetTrigger("Jump");
@@ -84,7 +95,7 @@ public class playerMovement : MonoBehaviour
                 }
                 else
                 {
-                    body.AddForce(new Vector2(0, -1) * Time.deltaTime * 2000f);
+                    body.AddForce(new Vector2(0, -1) * Time.deltaTime * 3000f);
                 }
             }
         }
@@ -102,6 +113,8 @@ public class playerMovement : MonoBehaviour
             animator.SetTrigger("Stun");
             animator.SetBool("Squat", false);
             stunCountdown = stunDuration;
+
+            GetComponent<playerAudio>().playHit();
         }
         if (collision.tag == "Finish")
         {

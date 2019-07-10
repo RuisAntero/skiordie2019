@@ -7,6 +7,7 @@ public class playerAudio : MonoBehaviour
 
     [SerializeField] AudioSource skiAudio;
     [SerializeField] AudioSource jumpAudio;
+    [SerializeField] AudioSource hitAudio;
     playerMovement player;
     float refVolume;
     float targetVolume;
@@ -42,5 +43,10 @@ public class playerAudio : MonoBehaviour
     public void playJump()
     {
         jumpAudio.Play();
+    }
+
+    public void playHit()
+    {
+        hitAudio.Play();
     }
 }
