@@ -20,6 +20,14 @@ public class Endscreen : MonoBehaviour
             {
                 canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, 1, 0.02f);
                 canvasGroup.interactable = true;
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    Retry();
+                }
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    Quit();
+                }
             }
         }
     }
