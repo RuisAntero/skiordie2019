@@ -21,6 +21,7 @@ public class AvalancheOverlay : MonoBehaviour
     void Update()
     {
         intensity = Mathf.Pow(Mathf.Clamp(1 - ((player.transform.position.x - avalanche.transform.position.x) / 40),0,1), 2);
+        if (Time.timeScale == 0) { intensity = 1; }
         image.color = new Color(image.color.r, image.color.g, image.color.b, intensity);
     }
 }
