@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Paralax 2
-  m_Shader: {fileID: 10751, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 10750, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _ALPHATEST_ON _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
@@ -40,9 +40,9 @@ Material:
         m_Scale: {x: 3, y: 3}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 596568e096900c544b9bfd37a5a3a738, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 296.54025, y: 0}
+        m_Texture: {fileID: 2800000, guid: c6b1ba306832eba4d8c637503b37bcd4, type: 3}
+        m_Scale: {x: 1, y: 0.99}
+        m_Offset: {x: 320.41467, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -61,7 +61,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
-    - _Cutoff: 0.505
+    - _Cutoff: 0.233
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1

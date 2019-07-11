@@ -12,6 +12,9 @@ public class playerMovement : MonoBehaviour
     float stunCountdown;
     bool dead;
 
+    [SerializeField] ParticleSystem Trail;
+    [SerializeField] ParticleSystem Hit;
+
     bool jumping;
 
     public bool Grounded(bool jump)
@@ -83,6 +86,8 @@ public class playerMovement : MonoBehaviour
                     animator.SetBool("Squat", false);
                     GetComponent<playerAudio>().playJump();
                     jumping = true;
+
+                    Trail.Stop();
                 }
             }
 
@@ -115,6 +120,7 @@ public class playerMovement : MonoBehaviour
             if (Mathf.Abs(collision.relativeVelocity.y) > 10f)
             {
                 animator.SetTrigger("Land");
+                Trail.Play();
             }
         }
     }
@@ -128,7 +134,13 @@ public class playerMovement : MonoBehaviour
             animator.SetBool("Squat", false);
             stunCountdown = stunDuration;
 
+            collision.transform.eulerAngles = new Vector3(0, 0, -45f);
+            collision.transform.Translate(new Vector3(0, -1, 1));
+            collision.enabled = false;
+
             GetComponent<playerAudio>().playHit();
+            Hit.Stop();
+            Hit.Play();
         }
         if (collision.tag == "Finish")
         {

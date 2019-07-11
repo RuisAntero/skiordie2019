@@ -59,5 +59,6 @@ MonoBehaviour:
   - {fileID: 3682648780074330858, guid: 41b8db5fce49d94418074adbfa1af52d, type: 3}
   - {fileID: 7385481425359766694, guid: 2b6e65aa47461f0439298b342b20dfa5, type: 3}
   - {fileID: 317145672165615960, guid: 926dc084eb245c64d832de512f82a12f, type: 3}
+  - {fileID: 2312651583865578687, guid: 31fa1523d20211a4ebbedcfda09023de, type: 3}
   minTileGap: 0
   obstaclePropabilityPercent: 10

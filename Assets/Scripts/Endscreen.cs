@@ -41,6 +41,6 @@ public class Endscreen : MonoBehaviour
     public void Quit()
     {
         GetComponent<AudioSource>().Play();
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("MainMenu");
     }
 }
