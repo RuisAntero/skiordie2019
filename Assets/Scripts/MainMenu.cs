@@ -2,28 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
-public class MainMenu : MonoBehaviour
+
+public class MainMenu : MonoBehaviour, IPointerClickHandler
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] GameObject panelCredits;
 
-    // Update is called once per frame
-    void Update()
+    public void OnPointerClick(PointerEventData pointerEventData)
     {
-        
-    }
-
-    public void Quit()
-    {
-        Application.Quit();
+        //Debug.Log(name + " Game Object Clicked!");
+        if (panelCredits.activeSelf)
+        {
+            CloseCredits();
+        }
     }
 
     public void Play()
     {
         SceneManager.LoadScene("Game");
+    }
+
+    public void OpenCredits()
+    {
+        panelCredits.SetActive(true);
+    }
+
+    public void CloseCredits()
+    {
+        panelCredits.SetActive(false);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }
