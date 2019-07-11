@@ -11,7 +11,7 @@ public class Avalanche : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        modSpeed = Mathf.Clamp(speed + Time.realtimeSinceStartup*0.05f + Vector2.Distance(transform.position, player.transform.position)* 0.4f, speed, speed*5);
+        modSpeed = Mathf.Clamp(speed + Time.timeSinceLevelLoad*0.05f + Vector2.Distance(transform.position, player.transform.position)* 0.4f, speed, speed*5);
         if (!player.enabled)
         {
             modSpeed = speed * 4;

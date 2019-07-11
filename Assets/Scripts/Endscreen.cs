@@ -26,11 +26,13 @@ public class Endscreen : MonoBehaviour
 
     public void Retry()
     {
+        GetComponent<AudioSource>().Play();
         SceneManager.LoadScene("Game");
     }
 
     public void Quit()
     {
+        GetComponent<AudioSource>().Play();
         SceneManager.LoadScene("Menu");
     }
 }
