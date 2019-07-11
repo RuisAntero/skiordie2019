@@ -44,6 +44,7 @@ public class playerAudio : MonoBehaviour
 
     public void playHit()
     {
+        hitAudio.pitch = 1 + Random.Range(-.2f, .2f);
         hitAudio.Play();
     }
 }

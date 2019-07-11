@@ -15,4 +15,9 @@ public class GameData : MonoBehaviour
             timeElapsed += Time.deltaTime;
         }
     }
+
+    public float HighScore()
+    {
+        return PlayerPrefs.GetFloat("HighScore");
+    }
 }

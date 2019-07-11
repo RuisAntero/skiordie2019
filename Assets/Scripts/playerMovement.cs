@@ -86,17 +86,15 @@ public class playerMovement : MonoBehaviour
                     animator.SetBool("Squat", false);
                     GetComponent<playerAudio>().playJump();
                     jumping = true;
-
-                    Trail.Stop();
                 }
             }
 
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
-                if (Grounded(false))
+                if (Grounded(true))
                 {
                     body.AddForce(new Vector2(1, 0) * Time.deltaTime * 1000f);
-                    animator.SetBool("Squat", true);
+                    animator.SetBool("Squat", true);       
                 }
                 else
                 {
@@ -110,6 +108,15 @@ public class playerMovement : MonoBehaviour
         }
 
         animator.SetBool("Jumping", jumping);
+
+        if (Grounded(false))
+        {
+            if (!Trail.isPlaying) { Trail.Play(); }
+        }
+        else
+        {
+            if (Trail.isPlaying) { Trail.Stop(); }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
