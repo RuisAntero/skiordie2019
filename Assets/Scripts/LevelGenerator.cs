@@ -110,5 +110,7 @@ public class LevelGenerator : MonoBehaviour
         //Debug.Log(pos);
         GameObject obstacle = Instantiate(obstacles[typeIndex]);
         obstacle.transform.position = pos;
+
+        Destroy(obstacle, 10f);
     }
 }
