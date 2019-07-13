@@ -11,17 +11,23 @@ public class MainMenu : MonoBehaviour, IPointerClickHandler
     [SerializeField] AudioClip soundButton;
     AudioSource audioSrc;
 
-    void Awake() {
+    void Awake() 
+    {
         audioSrc = GetComponent<AudioSource>();
+    }
+
+    void Update() 
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            CloseCredits();
+        }
     }
 
     public void OnPointerClick(PointerEventData pointerEventData)
     {
         //Debug.Log(name + " Game Object Clicked!");
-        if (panelCredits.activeSelf)
-        {
-            CloseCredits();
-        }
+        CloseCredits();
     }
 
     public void Play()
@@ -38,7 +44,11 @@ public class MainMenu : MonoBehaviour, IPointerClickHandler
 
     public void CloseCredits()
     {
-        panelCredits.SetActive(false);
+        if (panelCredits.activeSelf)
+        {
+            PlayButtonSound();
+            panelCredits.SetActive(false);
+        }
     }
 
     public void Quit()
